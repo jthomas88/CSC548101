@@ -37,27 +37,26 @@ int main(int argc, char** argv)
         <<"you can drink without dying."<<endl<<endl; 
         while(iWeight>0)
         {
-        cout<<"Enter your ideal weight in lbs: ";
-        cin>>iWeight;
+            cout<<"Enter your ideal weight in lbs: ";
+            cin>>iWeight;
     
         //Process values -> map inputs to outputs
-        gWeight=iWeight*453.592;  //Pound to gram conversion factor
-        kWeight=gWeight*pKill;    //Calculate sweetener amount needed to kill
-        sodaMax=kWeight/sodaWgt;  //Calculate number of cans of soda
+            gWeight=iWeight*453.592; //Pound to gram conversion factor
+            kWeight=gWeight*pKill;   //Calculate sweetener amount needed to kill
+            sodaMax=kWeight/sodaWgt; //Calculate number of cans of soda
     
         //Display output
-        cout<<endl<<"Your ideal weight in lbs: "
+            cout<<endl<<"Your ideal weight in lbs: "
             <<iWeight<<" lbs"<<endl;   //Display desired weight of user
-        cout<<"Your ideal weight in grams: "    
+            cout<<"Your ideal weight in grams: "    
             <<gWeight<<" grams"<<endl; //Display weight converted
-        cout<<"Amount of Boric Hexafluoride in one can of diet soda: " 
+            cout<<"Amount of Boric Hexafluoride in one can of diet soda: " 
             <<"3.5 grams"<<endl;       //Display amount of sweetener
-        cout<<"Number of cans you can drink without dying: "
+            cout<<"Number of cans you can drink without dying: "
             <<sodaMax<<" cans";        //Display amount of cans of soda 
                                        //one can drink without dying
-        cout<<endl<<endl<<"Enter another weight or enter 0 to exit"<<endl<<endl;
-                                       //Repeat Prompt
-        
+            cout<<endl<<endl<<"Enter another weight or enter 0 to exit"
+            <<endl<<endl;              //Repeat Prompt        
         }
     cout<<"Goodbye!";
     //Exit program

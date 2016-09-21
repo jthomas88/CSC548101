@@ -9,12 +9,6 @@
 #include <iostream>  //Input/Output objects
 using namespace std; //Namespace used in system library
 
-//User libraries
-
-//Global constants
-
-//Function prototypes
-
 //Execution begins here
 int main(int argc, char** argv) 
 {

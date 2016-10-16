@@ -7,6 +7,8 @@
 
 //System Libraries
 #include <iostream> //Input/Output objects
+#include <iomanip>  //Manipuilate precision of outputs
+
 using namespace std; //Namespace used in system library
 
 //User libraries
@@ -23,11 +25,11 @@ int main(int argc, char** argv)
                   usrHgt,   //Given height of user
                   usrWgt;   //Given weight of user
     
-    unsigned int  szHat,     //Computed hat size
-                  szJak,     //Computed jacket size
-                  szWst=0;   //Computed waist size
+    float         szHat,    //Computed hat size
+                  szJak,    //Computed jacket size
+                  szWst=0;  //Computed waist size
     
-    float ageMult;           //Holds value for added size
+    float         ageMult;  //Holds value for added size
     
     //Input values
     cin>>usrHgt>>usrWgt>>usrAge;
@@ -39,10 +41,11 @@ int main(int argc, char** argv)
     
     //Chest size calculation
     if((usrAge/10)>3){
-        szJak=((usrHgt*usrWgt)/288);
+        szJak=((static_cast<float>(usrHgt)*static_cast<float>(usrWgt))/288);
         for(int i=usrAge/10;i>3;i--){
             ageMult+=0.125;
         }
+        szJak+=ageMult;
     }
     else{
         szJak=((usrHgt*usrWgt)/288);
@@ -54,13 +57,16 @@ int main(int argc, char** argv)
         for(int i=usrAge/2;i>14;i--){
             ageMult+=0.1;
         }
+        szWst+=ageMult;
     }
     else{
         szWst=usrWgt/5.7;
     }
     
     //Display output
-    cout<<endl<<szHat<<endl<<szJak<<endl<<szWst<<endl<<ageMult;
+    cout<<endl<<"Your hat size is: "<<setprecision(1)<<szHat;
+    cout<<endl<<"Your jacket size is: "<<setprecision(2)<<szJak;
+    cout<<endl<<"Your waist size is: "<<setprecision(2)<<szWst;
     
     //Exit program
     return 0;

@@ -13,9 +13,9 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=dll
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/savitch_9thed_chap4_progproj2__bad_outputs_for_chest_and_waist_
-OUTPUT_BASENAME=savitch_9thed_chap4_progproj2__bad_outputs_for_chest_and_waist_
-PACKAGE_TOP_DIR=savitch9thedchap4progproj2(badoutputsforchestandwaist)/
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/savitch_9thed_chap4_progproj4
+OUTPUT_BASENAME=savitch_9thed_chap4_progproj4
+PACKAGE_TOP_DIR=savitch9thedchap4progproj4/
 
 # Functions
 function checkReturnCode
@@ -60,15 +60,15 @@ mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/savitch9thedchap4progproj2(badoutputsforchestandwaist)/bin"
+makeDirectory "${NBTMPDIR}/savitch9thedchap4progproj4/bin"
 copyFileToTmpDir "${OUTPUT_PATH}.exe" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}.exe" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/savitch9thedchap4progproj2\(badoutputsforchestandwaist\).tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/savitch9thedchap4progproj4.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/savitch9thedchap4progproj2\(badoutputsforchestandwaist\).tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/savitch9thedchap4progproj4.tar *
 checkReturnCode
 
 # Cleanup

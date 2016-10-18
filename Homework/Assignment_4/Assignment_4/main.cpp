@@ -1,8 +1,8 @@
 /* 
  * File:   main.cpp
  * Author: Jeffrey Thomas
- * Created on Month, Day, Year, Time
- * Purpose: 
+ * Created on October 17, 2016, 7:10 PM
+ * Purpose: Assignment 4
  */
 
 //System Libraries

@@ -1,8 +1,8 @@
 /* 
  * File:   main.cpp
  * Author: Jeffrey Thomas
- * Created on Month, Day, Year, Time
- * Purpose: 
+ * Created on October 22, 2016, 09:32 PM
+ * Purpose: Raise a mysterious creature to adulthood
  */
 
 //System Libraries
@@ -21,11 +21,9 @@ int main(int argc, char** argv)
 {
     //Declaration of variables
     
-    //Input values
+    //Input Values
     
-    //Process values -> map inputs to outputs    
-    
-    //Display output    
+    //Process Values
     
     //Exit program
     return 0;

@@ -27,6 +27,7 @@ int main(int argc, char** argv)
     int    hung, //Creature hunger rating
            happ, //Creature happiness rating    
            warm; //Creature warmth rating
+    int counter; //Counts number of days
     
     //Game Start
     cout<<"After a night of heavy drinking, you wake up as you would any other "
@@ -41,13 +42,21 @@ int main(int argc, char** argv)
         <<"plywood and chicken wire in the middle of your apartment.";    
     cout<<endl<<endl;        
     
+    counter=1;
     hung=100;
     happ=100;
     warm=100;
     coin=0;
     
-    for(int i=15;i>0;i--){
+    
+    while(hung>0&&happ>0&&warm>0&&counter<15){
         rndCoin=rand()%100;
+        cout<<"Day      : "<<counter<<endl;
+        cout<<"Stomach  : "<<hung<<endl;
+        cout<<"Happiness: "<<happ<<endl;
+        cout<<"Warmth   : "<<warm<<endl;
+        cout<<"Money    : "<<coin<<" coins"<<endl;
+        cout<<endl;
         cout<<"What would you like to do?"<<endl;
         cout<<"1) Make Money"<<endl
             <<"2) Feed creature"<<endl
@@ -61,9 +70,9 @@ int main(int argc, char** argv)
                 cout<<"You head out to the streets to panhandle for the day"<<endl;
                 cout<<"You made: "<<rndCoin<<" coins"<<endl;
                 coin+=rndCoin;
-                cout<<coin;
+                //cout<<coin;
                 cout<<endl<<endl;
-                
+
                 warm-=10;
                 break;
             case 2:
@@ -71,7 +80,7 @@ int main(int argc, char** argv)
                     <<"the egg. Now must not be a good time..."<<endl;
                 cout<<"Stomach + 0";
                 cout<<endl<<endl;
-                
+
                 warm-=10;
                 break;
             case 3:
@@ -80,7 +89,7 @@ int main(int argc, char** argv)
                     <<"an egg."<<endl;
                 cout<<"Happiness + 10";
                 cout<<endl<<endl;
-                
+
                 happ+=10;
                 warm-=10;
                 break;
@@ -88,16 +97,42 @@ int main(int argc, char** argv)
                 cout<<"You've grown attached to the egg you've invested all "
                     <<"this time in and decide to spend the rest of the day "
                     <<"cuddling with your new friend."<<endl;
-                cout<<"Warmth + 10";
+                cout<<"Warmth + 20";
                 cout<<endl<<endl;
-                
+
                 warm+=20;
                 break;
             case 5: 
                 //Shopping code
                 break;
+                
         }
+        counter++;
     }
+    if(hung<=0||happ<=0||warm<=0){
+        cout<<"You awaken one morning to discover something terrible.";
+        cout<<"You little buddy appears to be laying still in the center of "
+            <<endl<<"the pen shriveled up. It's far too late to do anything "
+            <<"for him now";    
+        cout<<endl<<endl;
+        cout<<"GAME OVER";
+        return 0;
+    }
+    
+    while(hung>0&&happ>0&&warm>0&&counter<40);{
+        cout<<"peepee";
+        counter++;
+    }
+    
+    if(hung<=0||happ<=0||warm<=0){
+        cout<<"You awaken one morning to discover something terrible.";
+        cout<<"You little buddy appears to be laying still in the center of "
+            <<endl<<"the pen shriveled up. It's far too late to do anything "
+            <<"for him now";    
+        cout<<endl<<endl;
+        cout<<"GAME OVER";
+    }
+    
     
     
     //Exit program

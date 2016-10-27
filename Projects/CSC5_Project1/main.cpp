@@ -106,6 +106,7 @@ int main(int argc, char** argv)
                 //Shopping code
                 break;          
         }
+<<<<<<< Updated upstream
         counter++;
     }
     
@@ -128,6 +129,11 @@ int main(int argc, char** argv)
     }
     
     while(hung>0&&happ>0&&warm>0&&counter<40){
+=======
+        counter++;    
+    }
+    while(hung>0&&happ>0&&warm>0&&counter<40);{
+>>>>>>> Stashed changes
         rndCoin=rand()%100;
         cout<<"Day      : "<<counter<<endl;
         cout<<"Stomach  : "<<hung<<endl;
@@ -148,6 +154,7 @@ int main(int argc, char** argv)
                 cout<<"You head out to the streets to panhandle for the day"<<endl;
                 cout<<"You made: "<<rndCoin<<" coins"<<endl;
                 coin+=rndCoin;
+<<<<<<< Updated upstream
                 cout<<endl<<endl;
 
                 warm-=10;
@@ -188,6 +195,39 @@ int main(int argc, char** argv)
                 warm+=15;
                 happ-=10;
                 hung-=10;
+=======
+                //cout<<coin;
+                cout<<endl<<endl;
+
+                warm-=10;
+                break;
+            case 2:
+                cout<<"Try as you might, you can't seem to find a way to feed "
+                    <<"the egg. Now must not be a good time..."<<endl;
+                cout<<"Stomach + 0";
+                cout<<endl<<endl;
+
+                warm-=10;
+                break;
+            case 3:
+                cout<<"You spend some time cleaning up the dust in and around "
+                    <<"the pen. This thing makes quite a mess for simply being "
+                    <<"an egg."<<endl;
+                cout<<"Happiness + 10";
+                cout<<endl<<endl;
+
+                happ+=10;
+                warm-=10;
+                break;
+            case 4: 
+                cout<<"You've grown attached to the egg you've invested all "
+                    <<"this time in and decide to spend the rest of the day "
+                    <<"cuddling with your new friend."<<endl;
+                cout<<"Warmth + 20";
+                cout<<endl<<endl;
+
+                warm+=20;
+>>>>>>> Stashed changes
                 break;
             case 5: 
                 //Shopping code
@@ -197,6 +237,7 @@ int main(int argc, char** argv)
         counter++;
     }
     
+<<<<<<< Updated upstream
     if(hung>0&&happ>0&&warm>0){
         cout<<endl<<endl;
         cout<<"Through this tumultuous month of caring for an infant monster, "
@@ -212,6 +253,9 @@ int main(int argc, char** argv)
         cout<<"YOUR CREATURE HAS BEGUN ITS ADULTHOOD STAGE.";
         cout<<endl<<endl;
     }
+=======
+    
+>>>>>>> Stashed changes
     
     if(hung<=0||happ<=0||warm<=0){
         cout<<"You awaken one morning to discover something terrible.";

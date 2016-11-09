@@ -7,6 +7,7 @@
 
 //System Libraries
 #include <iostream>  //Input/Output objects
+#include <iomanip>   //Format text
 
 using namespace std; //Namespace used in system library
 
@@ -15,22 +16,28 @@ using namespace std; //Namespace used in system library
 //Global constants
 
 //Function prototypes
-void egg(int,int,int,int,int,int);
-void storeData(int,int,int,int,int);
+bool isBroke(int); //Checks if user has enough money to go to the store
+void rndEvnt(int&,int&,int&,int&,string); //Random event generator
+void shop(int&,int&,int&,int&,string);    //Handles shop
+
 //Execution begins here
 int main(int argc, char** argv) 
 {
-    //Declaration of variables
+    //Random Number Seed
     srand(time(NULL));
-    int rndCoin; //Number of coins earned
-    int    coin; //Held coins
-    int  choice; //Used to choose options within the game
-    int    hung, //Creature hunger rating
-           happ, //Creature happiness rating    
-           warm; //Creature warmth rating
-    int counter; //Counts number of days
+    //Declaration of variables    
+    char           choice;  //Used to choose options within the game
+    int            rndCoin; //Number of coins earned
+    int            coin;    //Held coins   
+    int            hung,    //Creature hunger rating
+                   happ,    //Creature happiness rating    
+                   warm;    //Creature warmth rating
+    unsigned short counter; //Counts number of days
+    string         ctrName; //Name of the creature
     
     //Game Start
+    
+    //Intro Story
     cout<<"After a night of heavy drinking, you wake up as you would any other "
         <<"afternoon. You stumble into the kitchen with a splitting headache "
         <<endl<<"and search for alka-seltzer and something greasy to soothe "
@@ -41,75 +48,112 @@ int main(int argc, char** argv)
         <<"it came from, you are curious to see what may come of it. ";
     cout<<endl<<"You spend the rest of the day building a pen out of leftover "
         <<"plywood and chicken wire in the middle of your apartment.";    
-    cout<<endl<<endl;        
+    cout<<endl<<endl;
+    cout<<"Please give your little friend a name: ";
+    cin>>ctrName;
+    cout<<endl;
     
+    //Initialize Variables
     counter=1;
     hung=100;
     happ=100;
     warm=100;
     coin=0;
     
+    //Egg Phase
+    
+    //Continues looping as long as stats remain above 0 and ends when counter
+    //reaches 15
     while(hung>0&&happ>0&&warm>0&&counter<15){
-        rndCoin=rand()%100;
+        rndCoin=rand()%100; //Initialize random money generator        
+        //Stats Menu
         cout<<"Day      : "<<counter<<endl;
         cout<<"Stomach  : "<<hung<<endl;
         cout<<"Happiness: "<<happ<<endl;
         cout<<"Warmth   : "<<warm<<endl;
         cout<<"Money    : "<<coin<<" coins"<<endl;
         cout<<endl;
+        //Ask for input
         cout<<"What would you like to do?"<<endl;
         cout<<"1) Make Money"<<endl
-            <<"2) Feed creature"<<endl
+            <<"2) Feed "<<ctrName<<endl
             <<"3) Clean Pen"<<endl
             <<"4) Cuddle"<<endl
             <<"5) Go shopping"<<endl;    
         cin>>choice;
-        cout<<endl;
-        switch(choice){
-            case 1:
-                cout<<"You head out to the streets to panhandle for the day"<<endl;
+        cout<<endl;        
+        //Input Validation
+        while(choice>53||choice<49){ //ASCII 1-5 has value of 49-53
+            cout<<"Invalid choice!";
+            cout<<endl;
+            cout<<"Day      : "<<counter<<endl;
+            cout<<"Stomach  : "<<hung<<endl;
+            cout<<"Happiness: "<<happ<<endl;
+            cout<<"Warmth   : "<<warm<<endl;
+            cout<<"Money    : "<<coin<<" coins"<<endl;
+            cout<<endl;
+            cout<<"What would you like to do?"<<endl;
+            cout<<"1) Make Money"<<endl
+                <<"2) Feed "<<ctrName<<endl
+                <<"3) Clean Pen"<<endl
+                <<"4) Cuddle"<<endl
+                <<"5) Go shopping"<<endl;    
+            cin>>choice;
+            cout<<endl;
+        }
+        //Choice tree
+        switch((choice%49)+1){ //Branching for different options
+            case 1: //"Make money" branch
+                cout<<"You head out to the streets to panhandle for the day"
+                    <<endl;
                 cout<<"You made: "<<rndCoin<<" coins"<<endl;
-                coin+=rndCoin;
-                //cout<<coin;
+                coin+=rndCoin; //Adds coins to total
                 cout<<endl<<endl;
 
-                warm-=10;
+                warm-=10; //Reduce warmth by 10
                 break;
-            case 2:
+            case 2: //"Feed" branch
                 cout<<"Try as you might, you can't seem to find a way to feed "
-                    <<"the egg. Now must not be a good time..."<<endl;
+                    <<ctrName<<". Now must not be a good time..."<<endl;
                 cout<<"Stomach + 0";
                 cout<<endl<<endl;
 
-                warm-=10;
+                warm-=10; //Reduce warmth by 10
                 break;
-            case 3:
+            case 3: //"Clean pen" branch
                 cout<<"You spend some time cleaning up the dust in and around "
                     <<"the pen. This thing makes quite a mess for simply being "
                     <<"an egg."<<endl;
                 cout<<"Happiness + 10";
                 cout<<endl<<endl;
 
-                happ+=10;
-                warm-=10;
+                happ+=10; //Increase happiness by 10
+                warm-=10; //Reduce warmth by 10
                 break;
-            case 4: 
+            case 4: //"Cuddle" branch
                 cout<<"You've grown attached to the egg you've invested all "
                     <<"this time in and decide to spend the rest of the day "
                     <<"cuddling with your new friend."<<endl;
                 cout<<"Warmth + 20";
                 cout<<endl<<endl;
 
-                warm+=20;
+                warm+=20; //Increase warmth by 20
                 break;
-            case 5: 
-                //Shopping code
+            case 5: //"Go shopping" branch
+                isBroke(coin); //Test is user has sufficient funds
+                if(isBroke(coin)==false){ //Output insufficient funds message
+                    cout<<"Insufficient funds! Come back when you have money.";
+                    cout<<endl<<endl;
+                }
+                else{ //Enter store if funds are sufficient
+                    shop(hung,happ,warm,coin,ctrName); //Call shop function
+                }
                 break;          
         }
-<<<<<<< Updated upstream
-        counter++;
+        counter++; //Increase counter by 1
     }
     
+    //Check if player can progress to next phase
     if(hung>0&&happ>0&&warm>0){
         cout<<endl<<endl;
         cout<<"You awaken one morning to a rustling in your living room. "
@@ -121,123 +165,133 @@ int main(int argc, char** argv)
             <<"bumping its head against the walls of the pen.";
         cout<<endl<<endl;
         cout<<"You're happy that the egg has finally hatched, but it seems "
-            <<"that your friend is blind.";
+            <<"that "<<ctrName<<" is blind.";
         cout<<endl<<endl;
-        cout<<"YOUR CREATURE HAS BEGUN ITS LARVA STAGE.";
+        cout<<ctrName<<" HAS BEGUN ITS LARVA STAGE.";
         cout<<endl<<endl;
-        happ-=50;
+        happ-=50; //Reduces happiness by 50 (artificial difficulty)
     }
     
+    //Larva Phase
+    
+    //Continues looping as long as stats remain above 0 and ends when counter
+    //reaches 40
     while(hung>0&&happ>0&&warm>0&&counter<40){
-=======
-        counter++;    
-    }
-    while(hung>0&&happ>0&&warm>0&&counter<40);{
->>>>>>> Stashed changes
-        rndCoin=rand()%100;
+        rndCoin=rand()%100; //Initialize random money generator 
+        
+        //Stats Menu
         cout<<"Day      : "<<counter<<endl;
         cout<<"Stomach  : "<<hung<<endl;
         cout<<"Happiness: "<<happ<<endl;
         cout<<"Warmth   : "<<warm<<endl;
         cout<<"Money    : "<<coin<<" coins"<<endl;
         cout<<endl;
+        //Ask for input
         cout<<"What would you like to do?"<<endl;
         cout<<"1) Make Money"<<endl
-            <<"2) Feed creature"<<endl
+            <<"2) Feed "<<ctrName<<endl
             <<"3) Clean Pen"<<endl
             <<"4) Cuddle"<<endl
             <<"5) Go shopping"<<endl;    
         cin>>choice;
         cout<<endl;
-        switch(choice){
-            case 1:
-                cout<<"You head out to the streets to panhandle for the day"<<endl;
+        
+        //Input Validation
+        while(choice>53||choice<49){
+            cout<<"Invalid choice!";
+            cout<<endl;
+            cout<<"Day      : "<<counter<<endl;
+            cout<<"Stomach  : "<<hung<<endl;
+            cout<<"Happiness: "<<happ<<endl;
+            cout<<"Warmth   : "<<warm<<endl;
+            cout<<"Money    : "<<coin<<" coins"<<endl;
+            cout<<endl;
+            cout<<"What would you like to do?"<<endl;
+            cout<<"1) Make Money"<<endl
+                <<"2) Feed "<<ctrName<<endl
+                <<"3) Clean Pen"<<endl
+                <<"4) Cuddle"<<endl
+                <<"5) Go shopping"<<endl;    
+            cin>>choice;
+            cout<<endl;
+        }
+        
+        //Choice Tree
+        switch((choice%49)+1){
+            case 1: //"Make money" branch
+                cout<<"You make a nice profit at your local gambling alley. "
+                    <<"Good thing you brought your own dice."<<endl;        
                 cout<<"You made: "<<rndCoin<<" coins"<<endl;
-                coin+=rndCoin;
-<<<<<<< Updated upstream
+                coin+=rndCoin; //Add coins to total
                 cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
 
-                warm-=10;
-                happ-=10;
-                hung-=10;
+                warm-=10; //Reduce warmth by 10
+                happ-=10; //Reduce happiness by 10
+                hung-=10; //Reduce stomach by 10
                 break;
-            case 2:
+            case 2: //"Feed" branch
                 cout<<"You place a dead rabbit into the pen with a large stick. "
-                    <<"The creature devours it whole with its gaping maw."
+                    <<ctrName<<" devours it whole with its gaping maw."
                     <<endl;
                 cout<<"Stomach + 15";
                 cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
 
-                warm-=10;
-                happ-=10;
-                hung+=15;
+                warm-=10; //Reduce warmth by 10 
+                happ-=10; //Reduce happiness by 10
+                hung+=15; //Increase stomach by 15
                 break;
-            case 3:
+            case 3: //"Clean pen" branch
                 cout<<"You spend some time cleaning up the dirt and waste "
-                    <<"that the creature accumulates in its living space. "
+                    <<"that "<<ctrName<<" accumulates in its living space. "
                     <<"You do your best to ignore the screeches it "<<endl
                     <<"emits when you clean up its precious garbage pile.";
                 cout<<endl;    
                 cout<<"Happiness + 15";
                 cout<<endl<<endl;
                 
-                warm-=10;
-                happ+=15;
-                hung-=10;
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
+                
+                warm-=10; //Reduce warmth by 10 
+                happ+=15; //Increase happiness by 10
+                hung-=10; //Reduce stomach by 10
                 break;
-            case 4: 
-                cout<<"You swaddle the creature in a special chainmail blanket "
-                    <<"to avoid getting bitten and spend some time cuddling "
-                    <<"with it."<<endl;
+            case 4: //"Cuddle" branch
+                cout<<"You swaddle "<<ctrName<<" in a special chainmail "
+                    <<"blanket to avoid getting bitten and spend some time "
+                    <<"cuddling with it."<<endl;
                 cout<<"Warmth + 15";
                 cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
 
-                warm+=15;
-                happ-=10;
-                hung-=10;
-=======
-                //cout<<coin;
-                cout<<endl<<endl;
-
-                warm-=10;
+                warm+=15; //Increase warmth by 15 
+                happ-=10; //Reduce happiness by 10
+                hung-=10; //Reduce stomach by 10
                 break;
-            case 2:
-                cout<<"Try as you might, you can't seem to find a way to feed "
-                    <<"the egg. Now must not be a good time..."<<endl;
-                cout<<"Stomach + 0";
-                cout<<endl<<endl;
-
-                warm-=10;
-                break;
-            case 3:
-                cout<<"You spend some time cleaning up the dust in and around "
-                    <<"the pen. This thing makes quite a mess for simply being "
-                    <<"an egg."<<endl;
-                cout<<"Happiness + 10";
-                cout<<endl<<endl;
-
-                happ+=10;
-                warm-=10;
-                break;
-            case 4: 
-                cout<<"You've grown attached to the egg you've invested all "
-                    <<"this time in and decide to spend the rest of the day "
-                    <<"cuddling with your new friend."<<endl;
-                cout<<"Warmth + 20";
-                cout<<endl<<endl;
-
-                warm+=20;
->>>>>>> Stashed changes
-                break;
-            case 5: 
-                //Shopping code
+            case 5: //"Go shopping" branch
+                isBroke(coin); //Test is user has sufficient funds
+                if(isBroke(coin)==false){ //Output insufficient funds message
+                    cout<<"Insufficient funds! Come back when you have money.";
+                    cout<<endl<<endl;
+                }
+                else{ //Enter store if funds are sufficient
+                    shop(hung,happ,warm,coin,ctrName); //Call shop function
+                }
                 break;
                 
         }
         counter++;
     }
     
-<<<<<<< Updated upstream
+    //Check if player can progress to the next phase
     if(hung>0&&happ>0&&warm>0){
         cout<<endl<<endl;
         cout<<"Through this tumultuous month of caring for an infant monster, "
@@ -246,29 +300,355 @@ int main(int argc, char** argv)
             <<"It doesn't scream nearly as much as it used to, it began "<<endl
             <<"walking on its hind legs, and it's finally house trained!";    
         cout<<endl<<endl;
-        cout<<"Your friend has matured quite a bit in these past 40 days and "
+        cout<<ctrName<<" has matured quite a bit in these past 40 days and "
             <<"you're quite proud of it. You can't help but wonder "<<endl
             <<"though if any more issues lie ahead.";                
         cout<<endl<<endl;
-        cout<<"YOUR CREATURE HAS BEGUN ITS ADULTHOOD STAGE.";
+        cout<<ctrName<<" HAS BEGUN ITS ADULTHOOD STAGE.";
         cout<<endl<<endl;
     }
-=======
     
->>>>>>> Stashed changes
+    //Adult Phase
     
+    //Continues looping as long as stats remain above 0 and ends when counter
+    //reaches 100
+    while(hung>0&&happ>0&&warm>0&&counter<100){
+        rndCoin=rand()%100;
+        
+        //Stats Menu
+        cout<<"Day      : "<<counter<<endl;
+        cout<<"Stomach  : "<<hung<<endl;
+        cout<<"Happiness: "<<happ<<endl;
+        cout<<"Warmth   : "<<warm<<endl;
+        cout<<"Money    : "<<coin<<" coins"<<endl;
+        cout<<endl;
+        //Ask for input
+        cout<<"What would you like to do?"<<endl;
+        cout<<"1) Make Money"<<endl
+            <<"2) Feed "<<ctrName<<endl
+            <<"3) Clean Pen"<<endl
+            <<"4) Cuddle"<<endl
+            <<"5) Go shopping"<<endl;    
+        cin>>choice;
+        cout<<endl;
+        
+        //Input Validation
+        while(choice>53||choice<49){
+            cout<<"Invalid choice!";
+            cout<<endl;
+            cout<<"Day      : "<<counter<<endl;
+            cout<<"Stomach  : "<<hung<<endl;
+            cout<<"Happiness: "<<happ<<endl;
+            cout<<"Warmth   : "<<warm<<endl;
+            cout<<"Money    : "<<coin<<" coins"<<endl;
+            cout<<endl;
+            cout<<"What would you like to do?"<<endl;
+            cout<<"1) Make Money"<<endl
+                <<"2) Feed "<<ctrName<<endl
+                <<"3) Clean Pen"<<endl
+                <<"4) Cuddle"<<endl
+                <<"5) Go shopping"<<endl;    
+            cin>>choice;
+            cout<<endl;
+        }
+        //Choice Tree
+        switch((choice%49)+1){
+            case 1: //"Make money" branch
+                cout<<"You buy some Disneyland tickets with credit card "
+                    <<"information you happened upon and they sell like "<<endl
+                    <<"hotcakes!";
+                cout<<endl;
+                cout<<"You made: "<<rndCoin<<" coins"<<endl;
+                coin+=rndCoin; //Add coins to total
+                cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
+
+                warm-=10; //Reduce warmth by 10
+                happ-=10; //Reduce happiness by 10
+                hung-=10; //Reduce stomach by 10
+                break;
+            case 2: //"Feed" branch
+                cout<<"You open the back gate and "<<ctrName<<" rushes out in "
+                    <<"search of food. It returns hours later looking "<<endl
+                    <<"satisfied. You look out the window and notice the "
+                    <<"skeleton of some kind of large mammal resting against a "
+                    <<"tree.";    
+                cout<<endl;
+                cout<<"Stomach + 15";
+                cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
+
+                warm-=10; //Reduce warmth by 10
+                happ-=10; //Reduce happiness by 10
+                hung+=15; //Increase stomach by 15
+                break;
+            case 3: //"Clean pen" branch
+                cout<<"You use your heavy duty steamer to remove the blood "
+                    <<"and waste stains from the carpet. ";
+                cout<<endl;    
+                cout<<"Happiness + 15";
+                cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
+                
+                warm-=10; //Reduce warmth by 10
+                happ+=15; //Increase happiness by 15
+                hung-=10; //Reduce stomach by 10
+                break;
+            case 4: 
+                cout<<"You drape a heavy blanket over "<<ctrName<<" and it "
+                    <<"begins to vibrate at a high frequency in order to "
+                    <<"generate heat";
+                cout<<endl;
+                cout<<"Warmth + 15";
+                cout<<endl<<endl;
+                
+                //Trigger random event
+                rndEvnt(hung,happ,warm,coin,ctrName);
+                warm+=15; //Increase warmth by 15
+                happ-=10; //Reduce happiness by 10
+                hung-=10; //Reduce stomach by 10
+                break;
+            case 5: 
+                isBroke(coin); //Test is user has sufficient funds
+                if(isBroke(coin)==false){ //Output insufficient funds message
+                    cout<<"Insufficient funds! Come back when you have money.";
+                    cout<<endl<<endl;
+                }
+                else{ //Enter store if funds are sufficient
+                    shop(hung,happ,warm,coin,ctrName); //Call shop function
+                }
+                break;
+        }
+        counter++; //Increase counter by 1
+    }
+    
+    //Check if player has won
+    if(hung>0&&happ>0&&warm>0){
+        cout<<"Just like any other day, you wake up and prepare to take care "
+            <<"of "<<ctrName<<". However, it sounds far too quiet. Normally, "
+            <<endl<<"you wake up to the sounds of high pitched screeches or "
+            <<"the sound of a bird getting attacked. You peek around the "
+            <<"corner and find your wall has a massive hole. Could it have "
+            <<endl<<"actually dome this much damage?";
+        cout<<endl<<endl;
+        cout<<"You inspect further and you find a letter addressed to you "
+            <<"sitting in a wedge on the makeshift pen. The letter reads: ";
+        cout<<endl<<endl;
+        cout<<"Dearest Friend, "<<endl<<endl<<setw(15);
+        cout<<"I've discovered true compassion in being raised by you. While "
+            <<"you may have been a "<<endl<<"degenerate, you were my friend."
+            <<"I'm afraid I must leave now. My motherland calls me.";
+        cout<<endl;
+        cout<<"Take Care, ";
+        cout<<endl;
+        cout<<setw(10)<<ctrName;
+    }
+    
+    //Check for GAME OVER
     if(hung<=0||happ<=0||warm<=0){
         cout<<"You awaken one morning to discover something terrible.";
         cout<<"You little buddy appears to be laying still in the center of "
             <<endl<<"the pen shriveled up. It's far too late to do anything "
-            <<"for him now";    
+            <<"for it now";    
         cout<<endl<<endl;
         cout<<"GAME OVER";
-        return 0;
-    }    
-    
+        return 0; //End program
+    }       
     
     //Exit program
     return 0;
 }
 
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*************************   Random Event Generator   *************************
+//Purpose:  Output a random event that changes course of game
+//Inputs:   Inputs to the function here -> Description, Range, Units
+//  xhung->Current hunger level
+//  xhapp->Current happiness level
+//  xwarm->Current warmth level
+//  xcoin->Current coin level
+//  name ->Creature's name
+//Output:   This is a void function. It changes the above values but does not
+//          output them
+//******************************************************************************
+void rndEvnt(int &xhung,int &xhapp,int &xwarm,int &xcoin,string name){
+    int rndChoi=rand()%8;      //Variable will output a random number 0-7
+    int rndBuff=(rand()%20)+1; //Provide random increase/decrease
+    switch(rndChoi){ //Selects random branch
+        case 0: //Increase stomach
+            cout<<endl<<endl;
+            cout<<"A bird flies into your apartment through an open window "
+                <<"and before you can reach for a broom, "<<name<<endl
+                <<"strikes it out of the air and devours it. You are concerned "
+                <<"at first but also in awe of how cool it was.";
+            cout<<endl;
+            cout<<"Stomach +"<<rndBuff;
+            cout<<endl<<endl;
+            xhung+=rndBuff;       
+            break;
+        case 1: //Increase happiness
+            cout<<endl<<endl;
+            cout<<name<<" passes some time chasing its own tail until "
+                <<"it tires itself out.";
+            cout<<endl;
+            cout<<"Happiness + "<<rndBuff;
+            cout<<endl<<endl;
+            xhapp+=rndBuff;          
+            break;
+        case 2: //Increase warmth
+            cout<<endl<<endl;
+            cout<<"The sun peers in perfectly through your living room window "
+                <<"allowing "<<name<<" to bask in the sunlight for a "<<endl
+                <<"little while. ";
+            cout<<endl;
+            cout<<"Warmth + "<<rndBuff;
+            cout<<endl<<endl;
+            xwarm+=rndBuff;          
+            break;
+        case 3: //Increase money
+            cout<<endl<<endl;
+            cout<<"Lucky day! A poor sap was walking home alone while you "
+                <<"waited in the alleyway you frequently hang out in. "<<endl
+                <<"You mug them and it goes off without a hitch. ";
+            cout<<endl;
+            cout<<"Coins + "<<rndBuff;
+            cout<<endl<<endl;
+            xcoin+=rndBuff;           
+            break;
+        case 4: //Decrease stomach
+            cout<<endl<<endl;
+            cout<<name<<" undergoes a molting phase and grows quite "
+                <<"a bit. The process puts stress on its body and uses "<<endl
+                <<"a lot of energy. ";
+            cout<<endl;
+            cout<<"Stomach - "<<rndBuff;
+            cout<<endl<<endl;
+            xhung-=rndBuff;           
+            break;
+        case 5: //Decrease happiness
+            cout<<endl<<endl;
+            cout<<"The day seems to drag by for "<<name<<" as you see it "
+                <<"pacing back and forth in its pen. It seems to be very bored";
+            cout<<endl;
+            cout<<"Happiness - "<<rndBuff;
+            cout<<endl<<endl;
+            xhapp-=rndBuff;           
+            break;
+        case 6: //Decrease warmth
+            cout<<endl<<endl;
+            cout<<"You forget to lay a blanket down for "<<name<<" before nap "
+                <<"time and return to the living room hours later to "<<endl
+                <<"discover that it's been shivering. Poor thing... ";
+            cout<<endl;
+            cout<<"Warmth - "<<rndBuff;
+            cout<<endl<<endl;
+            xwarm-=rndBuff;           
+            break;
+        case 7: //Decrease money
+            cout<<endl<<endl;
+            cout<<"Your gambling habit got a bit out of hand tonight and you "
+                <<"return home not just emptyhanded but with a net loss. ";
+            cout<<endl;
+            cout<<"Coin - "<<rndBuff;
+            cout<<endl<<endl;
+            xcoin-=rndBuff;           
+            break;
+    }
+}
+
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//*******************************   Shop   ************************************
+//Purpose:  Handle all shop functions (purchase, buff creature)
+//Inputs:   Inputs to the function here -> Description, Range, Units
+//  xhung->Current hunger level
+//  xhapp->Current happiness level
+//  xwarm->Current warmth level
+//  xcoin->Current coin level
+//  name ->Creature's name
+//Output:   This is a void function. It changes the above values but does not
+//          output them
+//******************************************************************************
+void shop(int &xhung,int &xhapp, int &xwarm, int &xcoin,string name){
+    
+    char choice; //User choice
+    //Ask for input
+    cout<<"Select an item for purchase";
+    cout<<endl;
+    cout<<"All items are 100 coins each.";
+    cout<<endl;
+    cout<<endl<<"1) Bag of Mice"
+        <<endl<<"2) Dog Toy"
+        <<endl<<"3) 10 pack of hand warmers"
+        <<endl;
+    cin>>choice;
+    //Input validation
+    while(choice>51||choice<49){
+        cout<<"Invalid choice!";
+        cout<<endl;
+        cout<<"Select an item for purchase";
+        cout<<endl;
+        cout<<"All items are 100 coins each.";
+        cout<<endl;
+        cout<<endl<<"1) Bag of Mice"
+            <<endl<<"2) Dog Toy"
+            <<endl<<"3) 10 pack of hand warmers"
+            <<endl;
+        cin>>choice;
+    }
+    switch((choice%49)+1){ //Selects item based on user choice
+        case 1: //Bag of mice branch
+            cout<<endl;
+            cout<<"You purchase a bag of mice and throw it in "<<name<<"'s "
+                <<"pen. It slowly approaches the bag and proceeds to rip "
+                <<endl<<"the bag to shreds and devour its contents.";
+            cout<<endl;
+            cout<<"Stomach +50";
+            cout<<endl<<endl;
+            xcoin-=100; //Reduce coin by 100
+            xhung+=50;  //Increase stomach by 50
+            break;
+        case 2: //Dog toy branch
+            cout<<endl;
+            cout<<"You purchase a dog toy and throw it in "<<name<<"'s "
+                <<"pen. It is confused at first but eventually gets the hang "
+                <<endl<<"of it and it continues playing with it for the rest "
+                <<"of the day.";    
+            cout<<endl;
+            cout<<"Happiness +50";
+            cout<<endl<<endl;
+            xcoin-=100; //Reduce coin by 100
+            xhapp+=50;  //Increase happiness by 50
+            break;
+        case 3: //10 pack of hand warmers branch
+            cout<<endl;
+            cout<<"You purchase a 10 pk of hand warmers and throw it in "
+                <<name<<"'s pen. It nuzzles itself against the activated "
+                <<endl<<"hand warmers until the heat slowly fades away.";
+            cout<<endl;
+            cout<<"Warmth +50";
+            cout<<endl<<endl;
+            xcoin-=100; //Decrease coin by 100
+            xwarm+=50;  //Increase warmth by 50
+            break;
+    }
+}
+
+//000000011111111112222222222333333333344444444445555555555666666666677777777778
+//345678901234567890123456789012345678901234567890123456789012345678901234567890
+//***************************   Sufficient Funds   *****************************
+//Purpose:  Determine if user has enough money to enter the shop
+//Inputs:   Inputs to the function here -> Description, Range, Units
+//  xcoin->Current coin level
+//Output:   True(If user has enough money) or False(If user does not)
+//******************************************************************************
+bool isBroke(int xcoin){
+    return xcoin/100; //Return 0 or 1+ depending on amt of money
+}

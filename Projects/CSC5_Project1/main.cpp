@@ -15,6 +15,7 @@ using namespace std; //Namespace used in system library
 //User libraries
 
 //Global constants
+int const SIZE=11;
 
 //Function prototypes
 
@@ -51,6 +52,8 @@ int main(int argc, char** argv)
                    happDec, //Rate of decrease for happiness
                    warmDec; //Rate of decrease for warmth
     
+    int stats[SIZE]={};
+    
     
     //Game Start
     
@@ -76,6 +79,8 @@ int main(int argc, char** argv)
     hung=100;  happ=100;   warm=100;
     hungInc=0; happInc=10; warmInc=20;
     hungDec=0; happDec=0;  warmDec=10;
+    
+    
     
     
     //Egg Phase
@@ -153,11 +158,14 @@ int main(int argc, char** argv)
                 }
                 break;
             case 6: //"Save and exit" branch
+                for(int i=0;i<SIZE;i++){
+                    
+                }
                 fstream save;
                 save.open("load.dat");
-                save<<ctrName<<' '<<counter<<' '<<coin<<' '<<hung<<' '<<happ
-                    <<' '<<warm<<' '<<hungInc<<' '<<happInc<<' '<<warmInc<<' '
-                    <<hungDec<<' '<<happDec<<' '<<warmDec;    
+                save<<stats[];
+                save.close();
+                return 0;
         }
         counter++; //Increase counter by 1
     }

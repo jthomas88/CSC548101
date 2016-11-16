@@ -15,16 +15,16 @@ using namespace std; //Namespace used in system library
 //User libraries
 
 //Global constants
-int const SIZE=11;
+int const SIZE=11; //Array size constant
 
 //Function prototypes
 
 //Menu Functions
-void opt1Coin(int&,int&,int&,int&,int,int,int);
-void opt2Hung(int&,int&,int&,int,int,int);
-void opt3Happ(int&,int&,int&,int,int,int);
-void opt4Warm(int&,int&,int&,int,int,int);
-void opt5Shop(int&,int&,int&,int&,string);
+void opt1Coin(int&,int&,int&,int&,int,int,int); //Option 1 function (Make Money)
+void opt2Hung(int&,int&,int&,int,int,int);      //Option 2 function (Feed 'x')
+void opt3Happ(int&,int&,int&,int,int,int);      //Option 3 function (Clean pen)
+void opt4Warm(int&,int&,int&,int,int,int);      //Option 4 function (Cuddle)
+void opt5Shop(int&,int&,int&,int&,string);      //Option 5 function (Shop)
 
 //Other Functions
 bool isBroke(int); //Checks if user has enough money to go to the store
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     int            hung,    //Creature hunger rating
                    happ,    //Creature happiness rating    
                    warm;    //Creature warmth rating
-    unsigned short counter; //Counts number of days
+    unsigned short counter=1; //Counts number of days
     string         ctrName; //Name of the creature
     
     int            hungInc, //Rate of increase for hunger
@@ -50,39 +50,112 @@ int main(int argc, char** argv)
                    warmInc; //Rate of increase for warmth
     int            hungDec, //Rate of decrease for hunger
                    happDec, //Rate of decrease for happiness
-                   warmDec; //Rate of decrease for warmth
+                   warmDec; //Rate of decrease for warmth   
     
-    int stats[SIZE]={};
+    int            stats[SIZE]={}; //Array used to save variables into file
     
     
-    //Game Start
+    //Start Menu
+    //ASCII Art Title Output
+    cout<<endl;
+    cout<<"___  ___                _              _____ _                    ";
+    cout<<endl;
+    cout<<"|  \\/  |               | |            /  ___| |                   ";
+    cout<<endl;
+    cout<<"| .  . | ___  _ __  ___| |_ ___ _ __  \\ `--.| |_ ___  _ __ _   _  ";
+    cout<<endl;
+    cout<<"| |\\/| |/ _ \\| '_ \\/ __| __/ _ \\ '__|  `--. \\ __/ _ \\| '__| | | | ";
+    cout<<endl;
+    cout<<"| |  | | (_) | | | \\__ \\ ||  __/ |    /\\__/ / || (_) | |  | |_| | ";
+    cout<<endl;
+    cout<<"\\_|  |_/\\___/|_| |_|___/\\__\\___|_|    \\____/ \\__\\___/|_|   \\__, | ";
+    cout<<endl;
+    cout<<"                                                            __/ |";
+    cout<<endl;
+    cout<<"       Monster Story                                       |___/ ";
+    cout<<endl<<endl;       
     
-    //Intro Story
-    cout<<"After a night of heavy drinking, you wake up as you would any other "
-        <<"afternoon. You stumble into the kitchen with a splitting headache "
-        <<endl<<"and search for alka-seltzer and something greasy to soothe "
-        <<"your hangover. As you try to pop your Jimmy Dean breakfast sandwich "
-        <<endl<<"into the microwave, you notice there is something inside.";
+    //Display Options
+    cout<<"Select one of the following options";
     cout<<endl<<endl;
-    cout<<"It appears to be a large spotted egg. While you have no idea where "
-        <<"it came from, you are curious to see what may come of it. ";
-    cout<<endl<<"You spend the rest of the day building a pen out of leftover "
-        <<"plywood and chicken wire in the middle of your apartment.";    
-    cout<<endl<<endl;
-    cout<<"Please give your little friend a name: ";
-    cin>>ctrName;
+    cout<<"1) New Game"<<endl;
+    cout<<"2) Load Game"<<endl;
+    
+    //Input Choice
+    cin>>choice;   
     cout<<endl;
     
-    //Initialize Variables
-    counter=1;
-    coin=0;
-    hung=100;  happ=100;   warm=100;
-    hungInc=0; happInc=10; warmInc=20;
-    hungDec=0; happDec=0;  warmDec=10;
+    //Input Validation (Only allows 1 or 2 to be chosen)
+    while(choice>50||choice<49){ //ASCII 1-2 has value of 49-50
+        cout<<"Invalid choice!";
+        cout<<endl;
+        cout<<"Select one of the following options"<<endl;
+        cout<<endl<<endl;
+        cout<<"1) New Game"<<endl;
+        cout<<"2) Load Game"<<endl;    
+        cin>>choice;
+        cout<<endl;
+    }
+    
+    //New Game and Load Game Branches
+    switch((choice%49)+1){
+        case 1:
+            //Empty branch will redirect to code below and start new game
+            break;
+        case 2:
+            //Reads in variables from "load.dat" and continues
+            //from those variables
+            ifstream load; //File read object
+            load.open("load.dat"); //Open save file
+            //Redefine variables in order of appearance in file
+            load>>ctrName>>counter>>coin
+                >>happ   >>hung   >>warm
+                >>happInc>>hungInc>>warmInc
+                >>happDec>>hungDec>>warmDec;    
+            //Assign variables definitions to array
+            //The array is used to write definitions to the save file
+            stats[0]=counter; stats[1]=coin;
+            stats[2]=happ; stats[3]=hung; stats[4]=warm;
+            stats[5]=happInc; stats[6]=hungInc; stats[7]=warmInc;
+            stats[8]=happDec; stats[9]=hungDec; stats[10]=warmDec;
+            load.close(); //Close save file
+            cout<<"Load Complete!"; //Output success message
+            cout<<endl<<endl;
+            break;
+    }
+     
+    
+       
     
     
+    //Intro Story
+    if(counter==1){
+        cout<<"After a night of heavy drinking, you wake up as you would any "
+        <<"other afternoon. You stumble into the kitchen with a splitting "
+        <<endl<<"headache and search for alka-seltzer and something greasy to "
+        <<"soothe your hangover. As you try to pop your Jimmy Dean breakfast "
+        <<endl<<"sandwich into the microwave, you notice something.";
+        cout<<endl<<endl;
+        cout<<"It appears to be a large spotted egg. While you have no idea "
+            <<"where it came from, you're curious to see what may come of it. ";
+        cout<<endl<<"You spend the rest of the day building a pen out of "
+            <<"leftover plywood and chicken wire in your apartment.";    
+        cout<<endl<<endl;
+        //Input monster name
+        cout<<"Please give your little friend a name: ";
+        cin>>ctrName;
+        cout<<endl;
+    }   
     
-    
+    //Initialize Variables   
+    //Default variables if "New Game" is chosen
+    if(counter==1){
+        coin=0;
+        hung=100;  happ=100;   warm=100;
+        hungInc=0; happInc=10; warmInc=20;
+        hungDec=0; happDec=0;  warmDec=10;
+    }    
+       
     //Egg Phase
     
     //Continues looping as long as stats remain above 0 and ends when counter
@@ -158,20 +231,27 @@ int main(int argc, char** argv)
                 }
                 break;
             case 6: //"Save and exit" branch
-                for(int i=0;i<SIZE;i++){
-                    
+                //Assign each element in array to a variable definition
+                stats[0]=counter; stats[1]=coin;
+                stats[2]=happ; stats[3]=hung; stats[4]=warm;
+                stats[5]=happInc; stats[6]=hungInc; stats[7]=warmInc;
+                stats[8]=happDec; stats[9]=hungDec; stats[10]=warmDec;
+                fstream save; //File write object
+                save.open("load.dat"); //Open file
+                save<<ctrName; //Write monster name
+                save<<endl;
+                for(int i=0;i<SIZE;i++){ //Writes each element in order written
+                    save<<stats[i];
+                    save<<endl;
                 }
-                fstream save;
-                save.open("load.dat");
-                save<<stats[];
-                save.close();
-                return 0;
+                save.close(); //Close file
+                return 0; //Exit Game
         }
         counter++; //Increase counter by 1
     }
     
     //Check if player can progress to next phase
-    if(hung>0&&happ>0&&warm>0){
+    if(counter==15&&hung>0&&happ>0&&warm>0){
         cout<<endl<<endl;
         cout<<"You awaken one morning to a rustling in your living room. "
             <<"Fearful that it may be a vagrant who's broken in, "<<endl
@@ -189,18 +269,15 @@ int main(int argc, char** argv)
         happ-=50; //Reduces happiness by 50 (artificial difficulty)
     }
     
-    //Change stat increases and decreases (for normal game)
-    if(ctrName!="harambe"||ctrName!="leviathan"||ctrName!="eeyore"){
-        hungInc=15; happInc=15; warmInc=15;
-        hungDec=10; happDec=10; warmDec=10;
-    }
+    //Change stat increases and decreases  
+    hungInc=15; happInc=15; warmInc=15;
+    hungDec=10; happDec=10; warmDec=10;   
     
     //Larva Phase
     
     //Continues looping as long as stats remain above 0 and ends when counter
     //reaches 40
-    while(hung>0&&happ>0&&warm>0&&counter<40){
-        rndCoin=rand()%100; //Initialize random money generator 
+    while(hung>0&&happ>0&&warm>0&&counter<40){ 
         
         //Stats Menu
         cout<<"Day      : "<<counter<<endl;
@@ -220,7 +297,7 @@ int main(int argc, char** argv)
         cout<<endl;
         
         //Input Validation
-        while(choice>53||choice<49){
+        while(choice>54||choice<49){ //ASCII 1-6 has value of 49-54
             cout<<"Invalid choice!";
             cout<<endl;
             cout<<"Day      : "<<counter<<endl;
@@ -243,8 +320,9 @@ int main(int argc, char** argv)
         switch((choice%49)+1){
             case 1: //"Make money" branch
                 cout<<"You make a nice profit at your local gambling alley. "
-                    <<"Good thing you brought your own dice."<<endl;        
-;
+                    <<"Good thing you brought your own dice."<<endl;  
+                
+                //Call "Make Money" function
                 opt1Coin(coin,hung,happ,warm,hungDec,happDec,warmDec);
                 
                 //Trigger random event
@@ -253,8 +331,9 @@ int main(int argc, char** argv)
                 break;
             case 2: //"Feed" branch
                 cout<<"You place a dead rabbit into the pen with a large stick. "
-                    <<ctrName<<" devours it whole with its gaping maw."
-                    <<endl;
+                    <<ctrName<<" devours it whole with its gaping maw."<<endl;
+                
+                //Call "Feed" function
                 opt2Hung(hung,happ,warm,hungInc,happDec,warmDec);
                 
                 //Trigger random event
@@ -268,6 +347,7 @@ int main(int argc, char** argv)
                     <<"emits when you clean up its precious garbage pile.";
                 cout<<endl;    
                 
+                //Call "Clean Pen" function
                 opt3Happ(hung,happ,warm,hungDec,happInc,warmDec);;
                 
                 //Trigger random event
@@ -279,6 +359,7 @@ int main(int argc, char** argv)
                     <<"blanket to avoid getting bitten and spend some time "
                     <<"cuddling with it."<<endl;
                 
+                //Call "Cuddle" function
                 opt4Warm(hung,happ,warm,hungDec,happDec,warmInc);
                 
                 //Trigger random event
@@ -295,13 +376,28 @@ int main(int argc, char** argv)
                     opt5Shop(hung,happ,warm,coin,ctrName); //Call shop function
                 }
                 break;
-                
+            case 6: //"Save and exit" branch
+                //Assign each element in array to a variable definition
+                stats[0]=counter; stats[1]=coin;
+                stats[2]=happ; stats[3]=hung; stats[4]=warm;
+                stats[5]=happInc; stats[6]=hungInc; stats[7]=warmInc;
+                stats[8]=happDec; stats[9]=hungDec; stats[10]=warmDec;
+                fstream save; //File write object
+                save.open("load.dat"); //Open file
+                save<<ctrName; //Write monster name
+                save<<endl;
+                for(int i=0;i<SIZE;i++){ //Writes each element in order written
+                    save<<stats[i];
+                    save<<endl;
+                }
+                save.close(); //Close file
+                return 0; //Exit Game    
         }
-        counter++;
+        counter++; //Increase counter by 1
     }
     
     //Check if player can progress to the next phase
-    if(hung>0&&happ>0&&warm>0){
+    if(counter==40&&hung>0&&happ>0&&warm>0){
         cout<<endl<<endl;
         cout<<"Through this tumultuous month of caring for an infant monster, "
             <<"you began questioning your will to live. However, it "<<endl    
@@ -322,7 +418,6 @@ int main(int argc, char** argv)
     //Continues looping as long as stats remain above 0 and ends when counter
     //reaches 100
     while(hung>0&&happ>0&&warm>0&&counter<100){
-        rndCoin=rand()%100;
         
         //Stats Menu
         cout<<"Day      : "<<counter<<endl;
@@ -342,7 +437,7 @@ int main(int argc, char** argv)
         cout<<endl;
         
         //Input Validation
-        while(choice>53||choice<49){
+        while(choice>54||choice<49){ //ASCII 1-6 values are 49-54
             cout<<"Invalid choice!";
             cout<<endl;
             cout<<"Day      : "<<counter<<endl;
@@ -367,7 +462,8 @@ int main(int argc, char** argv)
                     <<"information you happened upon and they sell like "<<endl
                     <<"hotcakes!";
                 cout<<endl;
-                        
+                
+                //Call "Make Money" function        
                 opt1Coin(coin,hung,happ,warm,hungDec,happDec,warmDec);
                 
                 //Trigger random event
@@ -382,6 +478,7 @@ int main(int argc, char** argv)
                     <<"tree.";    
                 cout<<endl;
                 
+                //Call "Feed" function
                 opt2Hung(hung,happ,warm,hungInc,happDec,warmDec);
                 
                 //Trigger random event
@@ -391,8 +488,9 @@ int main(int argc, char** argv)
             case 3: //"Clean pen" branch
                 cout<<"You use your heavy duty steamer to remove the blood "
                     <<"and waste stains from the carpet. ";
-                cout<<endl;    
+                cout<<endl;   
                 
+                //Call "Clean pen" function
                 opt3Happ(hung,happ,warm,hungDec,happInc,warmDec);
                 
                 //Trigger random event
@@ -405,6 +503,7 @@ int main(int argc, char** argv)
                     <<"generate heat";
                 cout<<endl;
                 
+                //Call "Cuddle" function
                 opt4Warm(hung,happ,warm,hungDec,happDec,warmInc);
                 
                 //Trigger random event
@@ -421,6 +520,22 @@ int main(int argc, char** argv)
                     opt5Shop(hung,happ,warm,coin,ctrName); //Call shop function
                 }
                 break;
+            case 6: //"Save and exit" branch
+                //Assign each element in array to a variable definition
+                stats[0]=counter; stats[1]=coin;
+                stats[2]=happ; stats[3]=hung; stats[4]=warm;
+                stats[5]=happInc; stats[6]=hungInc; stats[7]=warmInc;
+                stats[8]=happDec; stats[9]=hungDec; stats[10]=warmDec;
+                fstream save; //File write object
+                save.open("load.dat"); //Open file
+                save<<ctrName; //Write monster name
+                save<<endl;
+                for(int i=0;i<SIZE;i++){ //Writes each element in order written
+                    save<<stats[i];
+                    save<<endl;
+                }
+                save.close(); //Close file
+                return 0; //Exit Game    
         }
         counter++; //Increase counter by 1
     }
@@ -581,7 +696,9 @@ bool isBroke(int xcoin){
 //  xhapp->Current happiness level
 //  xwarm->Current warmth level
 //  xcoin->Current coin level
-//  name ->Creature's name
+//  hungDec->Decrease rate of hunger
+//  happDec->Decrease rate of happiness
+//  warmDec->Decrease rate of warmth
 //Output:   This is a void function. It changes the above values but does not
 //          output them
 //******************************************************************************
@@ -601,13 +718,14 @@ void opt1Coin(int &xcoin,int &xhung,int &xhapp,int &xwarm,
 //000000011111111112222222222333333333344444444445555555555666666666677777777778
 //345678901234567890123456789012345678901234567890123456789012345678901234567890
 //**********************************   Feed   **********************************
-//Purpose:  Handle stat changes for "make money" option
+//Purpose:  Handle stat changes for "feed" option
 //Inputs:   Inputs to the function here -> Description, Range, Units
 //  xhung->Current hunger level
 //  xhapp->Current happiness level
 //  xwarm->Current warmth level
-//  xcoin->Current coin level
-//  name ->Creature's name
+//  hungInc->Increase rate of hunger
+//  happDec->Decrease rate of happiness
+//  warmDec->Decrease rate of warmth
 //Output:   This is a void function. It changes the above values but does not
 //          output them
 //******************************************************************************
@@ -623,14 +741,15 @@ void opt2Hung(int &xhung,int &xhapp,int &xwarm,
 
 //000000011111111112222222222333333333344444444445555555555666666666677777777778
 //345678901234567890123456789012345678901234567890123456789012345678901234567890
-//**********************************   Feed   **********************************
-//Purpose:  Handle stat changes for "make money" option
+//*****************************   Clean Pen   **********************************
+//Purpose:  Handle stat changes for "clean pen" option
 //Inputs:   Inputs to the function here -> Description, Range, Units
 //  xhung->Current hunger level
 //  xhapp->Current happiness level
 //  xwarm->Current warmth level
-//  xcoin->Current coin level
-//  name ->Creature's name
+//  hungDec->Decrease rate of hunger
+//  happInc->Increase rate of happiness
+//  warmDec->Decrease rate of warmth
 //Output:   This is a void function. It changes the above values but does not
 //          output them
 //******************************************************************************
@@ -646,14 +765,15 @@ void opt3Happ(int &xhung,int &xhapp,int &xwarm,
 
 //000000011111111112222222222333333333344444444445555555555666666666677777777778
 //345678901234567890123456789012345678901234567890123456789012345678901234567890
-//**********************************   Feed   **********************************
-//Purpose:  Handle stat changes for "make money" option
+//********************************   Cuddle   **********************************
+//Purpose:  Handle stat changes for "cuddle" option
 //Inputs:   Inputs to the function here -> Description, Range, Units
 //  xhung->Current hunger level
 //  xhapp->Current happiness level
 //  xwarm->Current warmth level
-//  xcoin->Current coin level
-//  name ->Creature's name
+//  hungDec->Decrease rate of hunger
+//  happDec->Decrease rate of happiness
+//  warmInc->Increase rate of warmth
 //Output:   This is a void function. It changes the above values but does not
 //          output them
 //******************************************************************************

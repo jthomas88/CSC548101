@@ -14,7 +14,8 @@ using namespace std; //Namespace used in system library
 //User libraries
 
 //Global constants
-const int COL=30;
+const int DAY=30; //Number of Days
+const int MON=3;  //Number of months
 
 //Function prototypes
 
@@ -22,7 +23,7 @@ const int COL=30;
 int main(int argc, char** argv) 
 {
     //Declaration of variables
-    int weather[3][COL];
+    char weather[MON][DAY];
     
     //Read Weather Data
     

@@ -51,6 +51,7 @@ int main(int argc, char** argv)
     
     //Find values greater than n and output;
     lrgThnN(n,array);
+    cout<<endl;
     
     //Exit program
     return 0;

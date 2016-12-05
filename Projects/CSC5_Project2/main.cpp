@@ -56,10 +56,10 @@ void prntAry(int score[][MAXPLAY],string names[],string align[]){
         cout<<"--------";
     }
     cout<<endl;
-    for(int i=0;i<FRAMES;i++){       
+    for(int i=0;i<MAXPLAY;i++){       
         cout<<names[i];
-        for(int j=0;j<MAXPLAY;j++){
-            cout<<score[j][i]<<"      |";
+        for(int j=0;j<FRAMES;j++){
+            cout<<score[i][j]<<"      |";
         }
         cout<<endl;
     }
@@ -71,7 +71,7 @@ void fillAry(int score[][MAXPLAY]){
     write.open("scoretest.dat");
     for(int i=0;i<MAXPLAY;i++){
         for(int j=0;j<FRAMES;j++){
-            score[j][i]=rand()%9;
+            score[j][i]=i+1; 
             write<<score[j][i];
             write<<endl;
         }

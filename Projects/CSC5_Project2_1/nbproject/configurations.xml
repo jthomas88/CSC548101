@@ -8,9 +8,7 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <itemPath>accts.dat</itemPath>
-      <itemPath>names.dat</itemPath>
-      <itemPath>tix.dat</itemPath>
+      <itemPath>scoretest.dat</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -42,13 +40,9 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="accts.dat" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="names.dat" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tix.dat" ex="false" tool="3" flavor2="0">
+      <item path="scoretest.dat" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -72,13 +66,9 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="accts.dat" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="names.dat" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tix.dat" ex="false" tool="3" flavor2="0">
+      <item path="scoretest.dat" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

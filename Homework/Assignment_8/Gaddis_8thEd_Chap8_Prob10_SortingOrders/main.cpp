@@ -107,8 +107,7 @@ void bubOrdr(int array[],int size){
         cout<<"Pass "<<count<<": ";
         prntAry(array,size);
         cout<<endl;
-    }while(isSwap);
-    
+    }while(isSwap);   
 }
 
 void slcOrdr(int array[],int size){

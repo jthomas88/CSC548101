@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=CSC5_Project2_1
+PROJECTNAME=Project2_BadOutputs_GoodPins
 
 # Active Configuration
 DEFAULTCONF=Debug

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=01_CPP_Template
+PROJECTNAME=Project2_Consolidate1
 
 # Active Configuration
 DEFAULTCONF=Debug

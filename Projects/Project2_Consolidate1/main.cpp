@@ -1,8 +1,8 @@
 /* 
  * File:   main.cpp
  * Author: Jeffrey Thomas
- * Created on Month Day, Year, Time AM/PM
- * Purpose: 
+ * Created on November 30, 2016, 10:30 PM
+ * Purpose: CSC-5 Final Project
  */
 
 //System Libraries
@@ -40,6 +40,10 @@ void toss(bool[],int,int&);
 //Set all pins back to standing
 void reset(bool[],int);
 
+//Totaling functions
+//Totals and returns score of an individual player
+int ttlScor(int[][FRAME],int);
+
 //Execution begins here
 int main(int argc, char** argv) 
 {
@@ -51,8 +55,9 @@ int main(int argc, char** argv)
     
     
     //Declare Variables
-    int utilize=0; //Number of array rows to be utilized
-    int totCont=0; //Total number of pins knocked down in one frame
+    int  utilize=0; //Number of array rows to be utilized
+    int  totCont=0; //Total number of pins knocked down in one frame
+    //char continu='';//Press enter to continue
     
     //Input number of players
     do{
@@ -90,19 +95,43 @@ int main(int argc, char** argv)
     dispBrd(board,7);
     cout<<endl<<endl;
     
+    //Set all bools to false
     for(int i=0;i<utilize*FRAME;i++){
         isPassd[i]=1;
     }
     
-    cout<<"Bool Array"<<endl;
-    for(int i=0;i<utilize*FRAME;i++){
-        cout<<isPassd[i]<<' ';
-        if(i%10==9)cout<<endl;
-    }
-    cout<<endl;
+    //Set Counter
+    int count=0;
     
-    int count=1;
+    //Fixes bug in which 1st roll rolls automatically
+    cin.ignore();
+    
     do{
+        cout<<"Press enter to roll"<<endl;
+        cin.ignore();
+                
+        //Take first throw (P1)
+        toss(isKnok,PIN,totCont);        
+        
+        //Update score and board
+        //updtScr(dspScor,rawScor,isPassd,utilize,totCont);
+        cout<<"Scores"<<endl;
+        dispScr(dspScor,names,utilize);
+        cout<<endl;
+
+        //Display current pins
+        cout<<"Roll "<<count<<endl;
+        prntBrd(isKnok,pins,PIN);
+        cout<<endl<<endl;
+
+        fillBrd(board,pins,7);
+        dispBrd(board,7);
+        cout<<endl<<endl;
+        
+        //Take second throw
+        cout<<"Press enter to roll"<<endl;
+        cin.ignore();
+                
         //Take first throw (P1)
         toss(isKnok,PIN,totCont);        
         
@@ -112,6 +141,7 @@ int main(int argc, char** argv)
         dispScr(dspScor,names,utilize);
         cout<<endl;
 
+        //Display current pins
         cout<<"Roll "<<count<<endl;
         prntBrd(isKnok,pins,PIN);
         cout<<endl<<endl;
@@ -119,17 +149,18 @@ int main(int argc, char** argv)
         fillBrd(board,pins,7);
         dispBrd(board,7);
         cout<<endl<<endl;
+        
+        //Reset pins
         reset(isKnok,PIN);
         totCont=0;
         count++;
-    }while(count<=utilize*FRAME);
+    }while(count<utilize*FRAME);
     
-    cout<<"Bool Array"<<endl;
-    for(int i=0;i<utilize*FRAME;i++){
-        cout<<isPassd[i]<<' ';
-        if(i%10==9)cout<<endl;
+    //Return Player 1 Score
+    for(int i=0;i<utilize;i++){
+        cout<<names[i]<<"'s score: "<<ttlScor(dspScor,i);
+        cout<<endl;
     }
-    cout<<endl;
     
     //Exit program
     return 0;
@@ -192,10 +223,12 @@ void updtScr(int dspScor[][FRAME],int rawScor[],bool isPassd[],int utilize,int &
 //2D Array Display
 void dispScr(int dspScor[][FRAME],string names[],int utilize){        
     for(int i=0;i<utilize;i++){;
-    cout<<names[i]<<" | ";            //Output player names in front of scores
+    cout<<names[i]<<" | ";              //Output player names in front of scores
         for(int j=0;j<10;j++){
-            cout<<dspScor[i][j]<<' '; //Output scores
-            if(j%10==9)cout<<endl;    //Line break after 10 frames
+            if(dspScor[i][j]<10)cout<<' ';
+            cout<<dspScor[i][j]<<" | ";        //Output scores
+            
+            if(j%10==9)cout<<endl;      //Line break after 10 frames
         }
     }
 }
@@ -221,6 +254,10 @@ void reset(bool isKnok[],int size){
 }
 
 //Totaling functions
-int ttlScor(int dspScor[][FRAME],string names[]){
-    
+int ttlScor(int dspScor[][FRAME],int player){
+    int totScor=0;
+    for(int i=0;i<FRAME;i++){
+        totScor+=dspScor[player][i];
+    }
+    return totScor;
 }

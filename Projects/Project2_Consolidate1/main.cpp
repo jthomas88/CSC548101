@@ -207,6 +207,9 @@ void updtScr(int dspScor[][FRAME],int rawScor[],bool isPassd[],int utilize,int &
     for(int i=0;i<utilize*10;i++){  //Set counter to increment for # of frames
         if(isPassd[i]!=0){          //Check if frame has passed yet
             rawScor[i]=totCont;     //Update score
+            if(rawScor[i-4]==10){
+                rawScor[i-4]+=rawScor[i];
+            }
             isPassd[i]=0;           //Indicate that frame has now passed
             totCont=0;              //Reset score
             break;                  //End loop
@@ -257,7 +260,12 @@ void reset(bool isKnok[],int size){
 int ttlScor(int dspScor[][FRAME],int player){
     int totScor=0;
     for(int i=0;i<FRAME;i++){
-        totScor+=dspScor[player][i];
+        if(dspScor[player][i]==10){
+            totScor+=(dspScor[player][i]+dspScor[player][i+1]);
+        }
+        else{
+            totScor+=dspScor[player][i];
+        }
     }
     return totScor;
 }

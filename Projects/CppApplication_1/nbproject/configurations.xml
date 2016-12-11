@@ -8,7 +8,9 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
+      <itemPath>data.dat</itemPath>
       <itemPath>maps.dat</itemPath>
+      <itemPath>title.dat</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -40,9 +42,13 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
+      <item path="data.dat" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="maps.dat" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="title.dat" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -66,9 +72,13 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="data.dat" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="maps.dat" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="title.dat" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

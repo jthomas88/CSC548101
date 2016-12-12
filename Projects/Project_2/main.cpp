@@ -11,28 +11,15 @@
 #include <string>    //String Manipulation
 #include <ctime>     //Random Seed
 #include <cstdlib>   //Random Generator
-
-
 using namespace std; //Namespace used in system library
+
+//User Libraries
+#include "Monster.h"
 
 //Global constants
 int const LENGTH=5;  //Length of 3D array representing dungeon
 int const WIDTH=5;   //Width of 3D array representing dungeon
 
-//Structures
-//Monster holds all values of the GF's you collect
-struct Monster{
-        int    hpt;   //Max Health Points
-        int    chp;   //Current health
-        int    atk;   //Base Attack
-        int    def;   //Base Defense
-        int    spd;   //Base Speed
-        int    mxp;   //Max EXP
-        int    cxp;   //Current EXP
-        int    lvl;   //Current Level
-        string name;  //Monster Name
-        string flvr;  //Monster Flavor Text
-    };
 
 //Function prototypes
 //Print Functions

@@ -64,8 +64,11 @@ int main(int argc, char** argv)
     //Initialize Random Seed
     srand(time(0));   
     
+    //Declare depth of dungeon
+    const int room=5;          //Number of floors in the dungeon  
+    
     //Declare Arrays
-    char roomTp[5][LENGTH][WIDTH];
+    char roomTp[room][LENGTH][WIDTH];
     
     //Location checks
     bool visitd[LENGTH][WIDTH]={};
@@ -73,7 +76,7 @@ int main(int argc, char** argv)
     bool used[LENGTH][WIDTH]={};
     
     //Boss Monsters
-    Monster boss[5];
+    Monster boss[room];
     
     //Initialize Bosses
     
@@ -144,8 +147,7 @@ int main(int argc, char** argv)
     char   choice;          //Choice input for various prompts
     
     int    outcome;         //Determines battle outcome branch
-    int    floor;           //The current floor of the dungeon  
-    int    room=5;          //Number of floors in the dungeon      
+    int    floor;           //The current floor of the dungeon      
     int    bosPosX,bosPosY; //Boss location on grid
     int    curPosX,curPosY; //Player's location on grid
     
